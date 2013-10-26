@@ -2,6 +2,7 @@
   "name": "standup",
   "version": "0.0.1",
   "dependencies": {
-    "bootstrap": "latest"
+    "bootstrap": "latest",
+    "momentjs": "~2.3.1"
   }
 }
