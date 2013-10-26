@@ -34,6 +34,7 @@ class App extends Spine.Controller
         msg: 'welcome'
         name: 'leCounter'
       @connection.send
+        msg: 'set'
         state: @state
         time: @time
         duration: @duration
