@@ -14,6 +14,7 @@
       "modules" : [
         "es5-shimify",
         "json2ify",
+        "moment",
         "spine",
         "spine/lib/local",
         "spine/lib/route",
