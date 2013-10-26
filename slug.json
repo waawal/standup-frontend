@@ -15,6 +15,7 @@
         "es5-shimify",
         "json2ify",
         "moment",
+        "jqueryify",
         "spine",
         "spine/lib/local",
         "spine/lib/route",
