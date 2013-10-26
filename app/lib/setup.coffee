@@ -1,6 +1,7 @@
 require('json2ify')
 require('es5-shimify')
-require('jqueryify')
+require('lib/jquery')
+require('lib/bootstrap')
 
 require('spine')
 require('spine/lib/local')
