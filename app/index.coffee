@@ -1,5 +1,5 @@
 require('lib/setup')
-moment = require('moment/moment')
+moment = require('moment')
 
 
 Spine = require('spine')
@@ -9,15 +9,18 @@ class App extends Spine.Controller
   constructor: ->
     super
     @html require("views/app")()
-    @$(".start").click => @startTimer
+
+  events:
+    "click .start": 'startTimer'
 
   startTimer: ->
-    @duration = moment.duation(15, 'minutes')
-    @$('.timer').html(@duration)
+    @duration = moment.duration(15, 'seconds')
+    conslo
+    @$('.timer').html(@duration.humanize())
     setInterval(@updateTimer, 1000)
 
   updateTimer: =>
-    @duration
-    @$('.timer').html()
+    @duration.subtract(1, 's')
+    @$('.timer').html(@duration.humanize())
 
 module.exports = App

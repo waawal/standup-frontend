@@ -1,12 +1,36 @@
 @import './mixin'
 
+type-light()
+  font-family: Lato
+  font-weight: 300
+
+type-regular()
+  font-family: Lato
+  font-weight: 400
+
+type-bold()
+  font-family: Lato
+  font-weight: 700
+
+
 h1
     text-transform uppercase
+    font-size: 60px;
+    type-bold()
+
 
 body
-	color: #222
-	background: #d3d3d3
+    type-regular
+    padding 40px
+    color: #222
+    background: #d3d3d3
 
-.timer {
+
+
+.timer
     font-size: 60px;
-}
+
+.main
+    border 1px solid #000
+    border-radius 5px
+    margin 0 0 20px 0
