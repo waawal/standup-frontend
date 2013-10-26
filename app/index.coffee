@@ -14,13 +14,12 @@ class App extends Spine.Controller
     "click .start": 'startTimer'
 
   startTimer: ->
-    @duration = moment.duration(15, 'seconds')
-    conslo
+    @duration = moment.duration('00:00:15')
     @$('.timer').html(@duration.humanize())
     setInterval(@updateTimer, 1000)
 
   updateTimer: =>
-    @duration.subtract(1, 's')
+    @duration.subtract('00:00:01')
     @$('.timer').html(@duration.humanize())
 
 module.exports = App
