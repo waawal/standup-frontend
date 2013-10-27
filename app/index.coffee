@@ -1,5 +1,5 @@
 require('lib/setup')
-moment = require('moment')
+
 
 Spine = require('spine')
 Clock = require('controllers/clock')

@@ -1,5 +1,7 @@
 Spine = require('spine')
 
+moment = require('moment')
+
 class Clock extends Spine.Controller
   className: 'main col-md-8'
   elements:
@@ -9,27 +11,25 @@ class Clock extends Spine.Controller
 
   constructor: ->
     super
-    @duration = moment.duration '00:00:15'
+    @duration = 15 * 60
+    @time = 0
     @render()
-    @startTimer()
+    
     @on "state", (state) =>
       if state is "running"
-        @log "Starting timer"
+        @intervalId = setInterval @updateTimer, 1000
       else
-        @log "stopping timer"
+        if @intervalId?
+          clearInterval(@intervalId)
     @on "duration", (duration) =>
-      @log "setting duration"
+      @duration = duration
     @on "time", (time) =>
-      @log "setting the time"
+      @time = time
     #  @startTimer()
-    
-
-  startTimer: =>
-    setInterval @updateTimer, 1000
 
   updateTimer: =>
-    @duration.subtract '00:00:01'
-    @timer.html @duration.asSeconds()
+    progress = moment.duration(@duration, 'seconds').subtract(@time, 'seconds')
+    @timer.html progress.asSeconds()
 
   render: =>
     @html require("views/clock") @duration
