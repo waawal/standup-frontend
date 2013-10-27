@@ -25,10 +25,23 @@ class App extends Spine.Controller
     @connection.on 'message', (msg) => @process(msg)
     @controls.on 'call', () => @connection.send
       msg: 'call'
-    @controls.on 'start', () => @connection.send
-      msg: 'start'
-    @controls.on 'stop', () => @connection.send
-      msg: 'stop'
+    @controls.on 'start', () =>
+      @connection.send
+        msg: 'start'
+      @connection.send
+        msg: 'set'
+        state: 'running'
+    @controls.on 'stop', () =>
+      @connection.send
+        msg: 'stop'
+      @connection.send
+        msg: 'set'
+        state: 'paused'
+    @controls.on 'duration', duration =>
+      @log duration
+      @connection.send
+        msg: 'set'
+        duration: duration
     @controls.on 'hangup', () => @connection.send
       msg: 'hangup'
 
@@ -36,7 +49,9 @@ class App extends Spine.Controller
     msg = msg.data
     if msg.msg is 'set'
       for key, val of msg
-        @clock.trigger key, val if @[key] isnt val
+        if @[key] isnt val
+          @clock.trigger key, val
+          @[key] = val
     if msg.msg is 'join'
       @connection.send
         msg: 'welcome'

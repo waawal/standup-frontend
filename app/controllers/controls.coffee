@@ -9,7 +9,7 @@ class Controls extends Spine.Controller
   events: 
     "click .start": "startHandler"
     "click .stop": "stopHandler"
-    "click .duration": "durationHandler"
+    "keyUp .duration": "durationHandler"
     "click .call": "callHandler"
     "click .hangup": "hangupHandler"
   constructor: ->
@@ -23,6 +23,8 @@ class Controls extends Spine.Controller
     @trigger 'stop'
     e.preventDefault()
   durationHandler: (e) =>
+    @log e
+    #@trigger 'duration', Number(e.el.val())
     e.preventDefault()
   callHandler: (e) =>
     @log 'callHandler'

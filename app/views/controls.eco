@@ -2,4 +2,4 @@
 <a class="start btn btn-success btn-block" href="#"> START </a>
 <a class="stop btn btn-danger btn-block" href="#"> STOP </a>
 <a class="hangup btn btn-danger btn-block" href="#"> HANG UP </a>
-<input id="duration"></duration>
+<input id="duration"></input>
