@@ -28,8 +28,9 @@ class Clock extends Spine.Controller
     #  @startTimer()
 
   updateTimer: =>
-    progress = moment.duration(@duration, 'seconds').subtract(@time, 'seconds')
-    @log progress
+    @time = @time + 1 
+    seekTime = @duration - @time
+    progress = moment.duration(seekTime, 'seconds')
     @timer.html progress.asSeconds()
 
   render: =>
