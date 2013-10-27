@@ -31,7 +31,7 @@ class Clock extends Spine.Controller
     @time = @time + 1 
     seekTime = @duration - @time
     progress = moment.duration(seekTime, 'seconds')
-    @timer.html progress.asSeconds()
+    @timer.html moment(progress.asMilliseconds()).format('h:mm:ss')
 
   render: =>
     @html require("views/clock") @duration
