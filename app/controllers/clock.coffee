@@ -11,7 +11,7 @@ class Clock extends Spine.Controller
 
   constructor: ->
     super
-    @duration = 15 * 60
+    @duration = 15
     @time = 0
     @render()
     
