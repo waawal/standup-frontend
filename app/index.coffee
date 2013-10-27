@@ -25,6 +25,10 @@ class App extends Spine.Controller
     @connection.on 'message', (msg) => @process(msg)
     @controls.on 'call', () => @connection.send
       msg: 'call'
+    @controls.on 'start', () => @connection.send
+      msg: 'start'
+    @controls.on 'stop', () => @connection.send
+      msg: 'stop'
     @controls.on 'hangup', () => @connection.send
       msg: 'hangup'
 

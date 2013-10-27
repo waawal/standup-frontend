@@ -17,8 +17,10 @@ class Controls extends Spine.Controller
     @html require("views/controls")()
 
   startHandler: (e) =>
+    @trigger 'start'
     e.preventDefault()
   stopHandler: (e) =>
+    @trigger 'stop'
     e.preventDefault()
   durationHandler: (e) =>
     e.preventDefault()
