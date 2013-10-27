@@ -23,16 +23,22 @@ class App extends Spine.Controller
 
     @connection = new Connection('https://standup-backend.herokuapp.com/sock')
     @connection.on 'message', (msg) => @process(msg)
-    @controls.on 'call', () => @connection.send
-      msg: 'call'
-    @controls.on 'start', () =>
+    @controls.on 'call', =>
+      @log 'sending call'
+      @connection.send
+        msg: 'call'
+    @controls.on 'hangup', =>
+      @log 'sending hangup'
+      @connection.send
+        msg: 'hangup'
+    @controls.on 'start', =>
       @connection.send
         msg: 'start'
       @clock.trigger 'state', 'running'
       @connection.send
         msg: 'set'
         state: 'running'
-    @controls.on 'stop', () =>
+    @controls.on 'stop', =>
       @connection.send
         msg: 'stop'
       @clock.trigger 'state', 'paused'
@@ -46,6 +52,7 @@ class App extends Spine.Controller
         'duration': duration
     @controls.on 'hangup', () => @connection.send
       msg: 'hangup'
+        duration: duration
 
   process: (msg) =>
     msg = msg.data
