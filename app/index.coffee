@@ -23,27 +23,31 @@ class App extends Spine.Controller
 
     @connection = new Connection('https://standup-backend.herokuapp.com/sock')
     @connection.on 'message', (msg) => @process(msg)
-    @controls.on 'call', () => @connection.send
-      msg: 'call'
-    @controls.on 'start', () =>
+    @controls.on 'call', =>
+      @log 'sending call'
+      @connection.send
+        msg: 'call'
+    @controls.on 'hangup', =>
+      @log 'sending hangup'
+      @connection.send
+        msg: 'hangup'
+    @controls.on 'start', =>
       @connection.send
         msg: 'start'
       @connection.send
         msg: 'set'
         state: 'running'
-    @controls.on 'stop', () =>
+    @controls.on 'stop', =>
       @connection.send
         msg: 'stop'
       @connection.send
         msg: 'set'
         state: 'paused'
-    @controls.on 'duration', duration =>
+    @controls.on 'duration', duration, =>
       @log duration
       @connection.send
         msg: 'set'
         duration: duration
-    @controls.on 'hangup', () => @connection.send
-      msg: 'hangup'
 
   process: (msg) =>
     msg = msg.data
