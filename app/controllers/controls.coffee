@@ -10,6 +10,8 @@ class Controls extends Spine.Controller
     "click .start": "startHandler"
     "click .stop": "stopHandler"
     "click .duration": "durationHandler"
+    "click .call": "callHandler"
+    "click .hangup": "hangupHandler"
   constructor: ->
     super
     @html require("views/controls")()
@@ -19,6 +21,14 @@ class Controls extends Spine.Controller
   stopHandler: (e) =>
     e.preventDefault()
   durationHandler: (e) =>
+    e.preventDefault()
+  callHandler: (e) =>
+    @log 'callHandler'
+    @trigger 'call'
+    e.preventDefault()
+  hangupHandler: (e) =>
+    @log 'hangupHandler'
+    @trigger 'hangup'
     e.preventDefault()
 
     
