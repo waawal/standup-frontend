@@ -49,9 +49,6 @@ class App extends Spine.Controller
       @log duration
       @connection.send
         msg: 'set'
-        'duration': duration
-    @controls.on 'hangup', () => @connection.send
-      msg: 'hangup'
         duration: duration
 
   process: (msg) =>
