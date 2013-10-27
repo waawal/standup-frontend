@@ -16,11 +16,11 @@ class Clock extends Spine.Controller
     @render()
     
     @on "state", (state) =>
+      if @intervalId?
+          clearInterval(@intervalId)
       if state is "running"
         @intervalId = setInterval @updateTimer, 1000
-      else
-        if @intervalId?
-          clearInterval(@intervalId)
+        
     @on "duration", (duration) =>
       @duration = duration
     @on "time", (time) =>
@@ -29,6 +29,7 @@ class Clock extends Spine.Controller
 
   updateTimer: =>
     progress = moment.duration(@duration, 'seconds').subtract(@time, 'seconds')
+    @log progress
     @timer.html progress.asSeconds()
 
   render: =>
