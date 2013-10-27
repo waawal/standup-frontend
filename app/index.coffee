@@ -28,20 +28,22 @@ class App extends Spine.Controller
     @controls.on 'start', () =>
       @connection.send
         msg: 'start'
+      @clock.trigger 'state', 'running'
       @connection.send
         msg: 'set'
         state: 'running'
     @controls.on 'stop', () =>
       @connection.send
         msg: 'stop'
+      @clock.trigger 'state', 'paused'
       @connection.send
         msg: 'set'
         state: 'paused'
-    @controls.on 'duration', duration =>
+    @controls.on 'duration', duration, =>
       @log duration
       @connection.send
         msg: 'set'
-        duration: duration
+        'duration': duration
     @controls.on 'hangup', () => @connection.send
       msg: 'hangup'
 
