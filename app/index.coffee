@@ -18,8 +18,8 @@ class App extends Spine.Controller
     @append @clock, @controls
 
     @state = null
-    @time = null
-    @duration = null
+    @duration = @clock.defaultDuration
+    @time = 0  # milliseconds, counts up to duration
 
     @connection = new Connection('https://standup-backend.herokuapp.com/sock')
     @connection.on 'message', (msg) => @process(msg)
@@ -49,7 +49,7 @@ class App extends Spine.Controller
       @log duration
       @connection.send
         msg: 'set'
-        duration: duration
+        duration: duration * 60000  # convert minutes to milliseconds
 
   process: (msg) =>
     msg = msg.data
