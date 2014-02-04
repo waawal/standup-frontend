@@ -4,8 +4,6 @@ class Clock extends Spine.Controller
   className: 'main col-md-8'
   elements:
     ".timer": "timer"
-  #events:
-  #  "click .start": 'startTimer'
 
   constructor: ->
     super
@@ -20,7 +18,7 @@ class Clock extends Spine.Controller
     @time = 0  # milliseconds, counts up to duration
 
     @render()
-    
+
     @on "state", (state) =>
       if @intervalId?
           clearInterval(@intervalId)
@@ -29,12 +27,15 @@ class Clock extends Spine.Controller
         
     @on "duration", (duration) =>
       @duration = duration
+
     @on "time", (time) =>
       @time = time
-    #  @startTimer()
 
   updateTimer: =>
     @time = @time + @precision
+    @renderTimer()
+
+  renderTimer: =>
     counterMilliseconds = @duration - @time
     @timer.html @timeToString(counterMilliseconds)
 

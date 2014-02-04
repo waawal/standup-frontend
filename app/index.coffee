@@ -18,8 +18,6 @@ class App extends Spine.Controller
     @append @clock, @controls
 
     @state = null
-    @duration = @clock.defaultDuration
-    @time = 0  # milliseconds, counts up to duration
 
     @connection = new Connection('https://standup-backend.herokuapp.com/sock')
     @connection.on 'message', (msg) => @process(msg)
@@ -32,24 +30,21 @@ class App extends Spine.Controller
       @connection.send
         msg: 'hangup'
     @controls.on 'start', =>
-      @connection.send
-        msg: 'start'
-      @clock.trigger 'state', 'running'
+      @state = 'running'
+      @clock.trigger 'state', @state
       @connection.send
         msg: 'set'
-        state: 'running'
+        state: @state
     @controls.on 'stop', =>
-      @connection.send
-        msg: 'stop'
-      @clock.trigger 'state', 'paused'
+      @state = 'paused'
+      @clock.trigger 'state', @state
       @connection.send
         msg: 'set'
-        state: 'paused'
+        state: @state
     @controls.on 'duration', duration, =>
-      @log duration
       @connection.send
         msg: 'set'
-        duration: duration * 60000  # convert minutes to milliseconds
+        duration: duration
 
   process: (msg) =>
     msg = msg.data
@@ -58,6 +53,7 @@ class App extends Spine.Controller
         if @[key] isnt val
           @clock.trigger key, val
           @[key] = val
+      @clock.renderTimer()
     if msg.msg is 'join'
       @connection.send
         msg: 'welcome'
@@ -65,8 +61,8 @@ class App extends Spine.Controller
       @connection.send
         msg: 'set'
         state: @state
-        time: @time
-        duration: @duration
+        time: @clock.time
+        duration: @clock.duration
     if msg.msg is 'welcome'
       @log msg
 
