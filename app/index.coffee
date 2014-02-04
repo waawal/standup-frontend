@@ -13,13 +13,14 @@ class App extends Spine.Controller
   constructor: ->
     super
 
-    @clock = new Clock()
+    @connection = new Connection('https://standup-backend.herokuapp.com/sock')
+
+    @clock = new Clock(@connection)
     @controls = new Controls()
     @append @clock, @controls
 
-    @state = null
+    @state = 'paused'
 
-    @connection = new Connection('https://standup-backend.herokuapp.com/sock')
     @connection.on 'message', (msg) => @process(msg)
     @controls.on 'call', =>
       @log 'sending call'
